@@ -1,0 +1,196 @@
+<head>
+  		<title>devfest</title>
+</head>
+
+<template name="navigation">
+	<ul>
+		<li><a href="{{pathFor route='home'}}">Home</a></li>
+		{{#if currentUser}}
+			<li><a href="{{pathFor route='add'}}">Add User</a></li>
+			<li><a href="{{pathFor route='edit'}}">Edit User</a></li>
+			<li><a href="{{pathFor route='purchase'}}">Purchases</a></li>
+			<li><a href="{{pathFor route='log'}}">Log</a></li>
+		{{/if}}
+		<li><a href="{{pathFor route='event'}}">Event</a></li>
+	</ul>
+</template>
+
+<template name="ApplicationLayout">
+	<body>
+  		<h1>Welcome to Meteor!</h1>
+		{{> navigation}}
+		{{> yield}}
+	</body>
+</template>
+
+<template name="home">
+  {{> loginButtons}}
+</template>
+
+<template name="add">
+	<h1>Add</h1>
+	<form class="new-entry">
+		<table style="width:80%">
+			<tr>
+				<td><input type="text" name="name" class="aname" placeholder="Enter name"/></td>			
+			</tr>
+			{{> eventsradio}}						
+			<tr>
+				<td><input type="radio" name="amount" value="5">$5</td>
+				<td><input type="radio" name="amount" value="10">$10</td>
+				<td><input type="radio" name="amount" value="15">$15</td>
+				<td><input type="radio" name="amount" value="20">$20</td>
+				<td><input type="radio" name="amount" value="25">$25</td>
+				<td><input type="radio" name="amount" value="30">$30</td>
+			</tr>
+			<tr>
+				<td><input type="text" name="id" class="aid" placeholder="Enter ID for new attendee" /></td>
+			</tr>
+			<tr>
+				<td><input type="submit" style="display:none"/></td>
+			</tr>
+		</table>
+	</form>
+	<ul>
+		{{#each attendees}}
+			{{> attend}}
+		{{/each}}
+	</ul>
+</template>
+
+<template name="edit">
+	<h1>Edit</h1>
+	<form class="new-entry">
+		<table style="width:80%">
+			<tr>
+				<td><input type="radio" name="type" value="load" checked>Load</td>
+				<td><input type="radio" name="type" value="modify">Modify</td>
+			</tr>
+			<tr>
+				<td><input type="text" name="name" class="aname" placeholder="Enter name"/></td>
+			</tr>
+			{{> eventsradio}}
+			<tr>
+				<td><input type="text" name="money" class="amoney" placeholder="Enter amount of money in account" /></td>
+			</tr>
+			<tr>
+				<td><input type="text" name="id" class="aid" placeholder="Enter ID" autofocus /></td>
+			</tr>
+			<tr>
+				<td><input type="submit" value="Submit" style="display:none"></td>
+				<td><button type="clear" name="clear" class="clear-button">Clear</button></td>
+			</tr>
+		</table>
+	</form>
+	<ul>
+		{{#each attendees}}
+			{{> attend}}
+		{{/each}}
+	</ul>
+</template>
+
+<template name="eventsradio">
+	<tr>
+		<td><input type="checkbox" name="grumpy" class="toggle-grumpy"/>GrumpyGit</td>
+		<td><input type="checkbox" name="retreat" class="toggle-retreat"/>Coderetreat</td>
+		<td><input type="checkbox" name="shdh" class="toggle-shdh"/>SHDH</td>
+		<td><input type="checkbox" name="node" class="toggle-node"/>NodeSchool</td>
+		<td><input type="checkbox" name="careers" class="toggle-careers"/>DevCareers</td>
+	</tr>
+	<tr>
+		<td><input type="checkbox" name="ios" class="toggle-ios"/>iOSDevScout</td>	
+		<td><input type="checkbox" name="tldr" class="toggle-tldr"/>FrontEndTLDR</td>
+		<td><input type="checkbox" name="ux" class="toggle-ux"/>HackingUX</td>
+		<td><input type="checkbox" name="talkjs" class="toggle-talkjs"/>TalkJS</td>
+		<td><input type="checkbox" name="css" class="toggle-css"/>CSSConf</td>
+		<td><input type="checkbox" name="haskell" class="toggle-haskell"/>Haskell</td>
+	</tr>
+	<tr>
+		<td><input type="checkbox" name="js" class="toggle-js"/>JSConf</td>
+		<td><input type="checkbox" name="bots" class="toggle-bots"/>NodeBots</td>
+		<td><input type="checkbox" name="rails" class="toggle-rails"/>RailsGirls</td>
+		<td><input type="checkbox" name="audio" class="toggle-audio"/>WebAudio</td>
+		<td><input type="checkbox" name="kopi" class="toggle-kopi"/>KopiJS</td>
+	</tr>
+</template>
+
+<template name="attend">
+	<li>{{id}}, {{name}}, {{cssChecked}}, {{jsChecked}}, {{money}}</li>
+</template>
+
+<template name="purchase">
+	<h1>Purchase</h1>
+	<form class="new-entry">
+		<table style="width:80%">
+			<tr>
+				<td><input type="radio" name="type" value="purchase" checked>Purchase</td>
+				<td><input type="radio" name="type" value="checkbalance">Check Balance</td>
+				<td><input type="radio" name="type" value="undo">Undo Last</td>
+			</tr>
+			<tr>
+				<td><input type="text" name="id" class="aid" placeholder="Enter ID" /></td>
+				<td><input type="radio" name="amount" value="5">$5</td>
+				<td><input type="radio" name="amount" value="10">$10</td>
+				<td><input type="radio" name="amount" value="15">$15</td>
+			</tr>
+			<tr>
+				<td>Balance: {{balance}}</td>
+			</tr>			
+			<tr>
+				<td><input type="submit" value="Submit" style="display:none"></td>
+			</tr>
+		</table>
+	</form>
+</template>
+
+<template name="event">
+	<h1>Event</h1>
+	<form class="new-entry">
+		<table style="width:80%">
+			<tr>
+				<td><input type="radio" name="event" value="grumpy">GrumpyGit</td>
+				<td><input type="radio" name="event" value="welcome">WelcomeParty</td>
+				<td><input type="radio" name="event" value="retreat">Coderetreat</td>
+				<td><input type="radio" name="event" value="shdh">SHDH</td>
+				<td><input type="radio" name="event" value="node">NodeSchool</td>
+				<td><input type="radio" name="event" value="careers">DevCareers</td>
+			</tr>
+			<tr>
+				<td><input type="radio" name="event" value="ios">iOSDevScout</td>			
+				<td><input type="radio" name="event" value="tldr">FrontEndTLDR</td>
+				<td><input type="radio" name="event" value="ux">HackingUX</td>
+				<td><input type="radio" name="event" value="talkjs">TalkJS</td>
+				<td><input type="radio" name="event" value="css">CSSConf</td>
+				<td><input type="radio" name="event" value="cssparty">CSSAfterParty</td>
+				<td><input type="radio" name="event" value="haskell">Haskell</td>
+			</tr>
+			<tr>
+				<td><input type="radio" name="event" value="js1">JSConfDay1</td>
+				<td><input type="radio" name="event" value="js2">JSConfDay2</td>
+				<td><input type="radio" name="event" value="bots">NodeBots</td>
+				<td><input type="radio" name="event" value="jsparty">JSAfterParty</td>
+				<td><input type="radio" name="event" value="rails">RailsGirls</td>
+				<td><input type="radio" name="event" value="audio">WebAudio</td>
+				<td><input type="radio" name="event" value="kopi">KopiJS</td>
+			</tr>
+		</table><br>
+		<input type="text" name="id" class="aid" placeholder="Enter ID"/>
+	</form>
+	Allowed: {{allowed}}<br>
+	Name: {{name}}
+</template>
+
+<template name="log">
+	<h1>Log</h1>
+	<textarea rows="30" cols="120" class="log-text">
+	</textarea>
+	<ul>
+		{{#each log}}
+			{{> logitem}}
+		{{/each}}
+	</ul>
+</template>
+
+<template name="logitem">
+	<li>"{{time}}", "{{type}}", "{{id}}", "{{name}}", {{money}}, {{amount}}, "{{event}}", "{{success}}"</li>
+</template>
