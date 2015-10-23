@@ -532,6 +532,7 @@ if (Meteor.isClient) {
           document.body.getElementsByClassName('toggle-rails')[0].checked=fnd[0]['railsChecked'];
           document.body.getElementsByClassName('toggle-audio')[0].checked=fnd[0]['audioChecked'];
           document.body.getElementsByClassName('toggle-kopi')[0].checked=fnd[0]['kopiChecked'];
+          event.target.type.value = 'modify';
         }
       }
     },

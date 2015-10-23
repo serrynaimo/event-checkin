@@ -1,5 +1,5 @@
 <head>
-  		<title>devfest</title>
+  		<title>DevFestAsia</title>
 </head>
 
 <template name="navigation">
@@ -17,7 +17,7 @@
 
 <template name="ApplicationLayout">
 	<body>
-  		<h1>Welcome to Meteor!</h1>
+  		<h1>DevFest Asia!</h1>
 		{{> navigation}}
 		{{> yield}}
 	</body>
@@ -63,7 +63,7 @@
 	<form class="new-entry">
 		<table style="width:80%">
 			<tr>
-				<td><input type="radio" name="type" value="load" checked>Load</td>
+				<td><input type="radio" name="type" id="load-radio" value="load" checked>Load</td>
 				<td><input type="radio" name="type" value="modify">Modify</td>
 			</tr>
 			<tr>
@@ -184,11 +184,6 @@
 	<h1>Log</h1>
 	<textarea rows="30" cols="120" class="log-text">
 	</textarea>
-	<ul>
-		{{#each log}}
-			{{> logitem}}
-		{{/each}}
-	</ul>
 </template>
 
 <template name="logitem">
