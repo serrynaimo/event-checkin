@@ -1,1 +1,52 @@
 /* CSS declarations go here */
+.printlabel {
+	display: none;
+    width: 400px;
+    height: 250px;
+    position: relative;
+    overflow: hidden;
+}
+
+.printlabel .name {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 48px;
+    padding: 0 30px;
+    font-size: 3.5em;
+    font-family: 'Doppio One';
+    text-align: center;
+    line-height: 1em;
+}
+
+.printlabel .event {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 20px;
+    text-align: center;
+    font-family: 'Helvetica Neue';
+}
+
+
+@media print {
+
+    body * {
+        display: none;
+    }
+
+    .printlabel {
+        display: block !important;
+        transform: rotateZ(90deg);
+        transform-origin: 125px 125px;
+    }
+
+    .printlabel > * {
+        display: block !important;
+    }
+
+    @page {
+        margin: 0;
+    }
+
+}

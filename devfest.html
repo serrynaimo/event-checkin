@@ -16,11 +16,10 @@
 </template>
 
 <template name="ApplicationLayout">
-	<body>
+	
   		<h1>DevFest Asia!</h1>
 		{{> navigation}}
 		{{> yield}}
-	</body>
 </template>
 
 <template name="home">
@@ -28,7 +27,47 @@
 </template>
 
 <template name="add">
+	<script src="https://apis.google.com/js/client.js?onload=checkAuth"></script>
 	<h1>Add</h1>
+	<div id="authorize-div" style="display: none">
+      <span>Authorize access to Google Apps Script Execution API</span>
+      <!--Button for the user to click to initiate auth sequence -->
+      <button id="authorize-button" onclick="handleAuthClick(event)">
+        Authorize
+      </button>
+    </div>
+    <form class="search">
+    	<table style="width:80%">
+    		<tr>
+    			<td>Name</td>
+    			<td>Email</td>
+    		</tr>
+    		<tr>
+    			<td><input type="text" name="name" class="bname" placeholder="Enter last name"/></td>
+    			<td><input type="text" name="email" class="email" placeholder="Enter email"/></td>
+    		</tr>
+    		<tr>
+    			<td><input type="submit" style="display:none"/></td>
+    		</tr>
+    	</table>
+    </form>
+    <div>
+    	<form class = "result-form">
+	    	<table id="results" style="width:80%">
+	    		<tr>
+	    			<td>Selected</td>
+	    			<td>FirstName</td>
+	    			<td>LastName</td>
+	    			<td>Email</td>
+	    			<td>Event</td>
+	    			<td>Twitter</td>
+	    			<td>Cancelled</td>
+	    		</tr>
+	    	</table>
+	    	<input type="submit" value="Submit">
+	    </form>
+    </div>
+    <pre id="output"></pre>
 	<form class="new-entry">
 		<table style="width:80%">
 			<tr>
@@ -116,6 +155,7 @@
 
 <template name="attend">
 	<li>{{id}}, {{name}}, {{cssChecked}}, {{jsChecked}}, {{money}}</li>
+	
 </template>
 
 <template name="purchase">
@@ -176,8 +216,21 @@
 		</table><br>
 		<input type="text" name="id" class="aid" placeholder="Enter ID"/>
 	</form>
+	<div class="printlabel">
+
+    <span class="name">
+        {{name}}
+    </span>
+
+    <span class="event">
+        {{event}}
+    </span>
+
+	</div>
+	<div>
 	Allowed: {{allowed}}<br>
 	Name: {{name}}
+	</div>
 </template>
 
 <template name="log">
