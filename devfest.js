@@ -502,7 +502,7 @@ if (Meteor.isClient) {
       var alldata = JSON.parse(localStorage.getItem("mydata"));
       var fnd = [];
       if (event.target.name.value)
-        fnd = alldata[event.target.name.value];
+        fnd = getByName(alldata, event.target.name.value);
       else
         fnd = getByEmail(alldata, event.target.email.value);
       Session.set("numrows",0);
@@ -524,7 +524,7 @@ if (Meteor.isClient) {
           var first = row.insertCell(1);
           first.innerHTML = fnd[i]['first'];
           var second = row.insertCell(2);
-          second.innerHTML = event.target.name.value;
+          second.innerHTML = fnd[i]['lastname'];
           var email = row.insertCell(3);
           email.innerHTML = fnd[i]['email'];
           var myevent = row.insertCell(4);
@@ -568,7 +568,7 @@ if (Meteor.isClient) {
           var fullname = row.cells[1].innerHTML + ' ' + row.cells[2].innerHTML;
           var evt = row.cells[4].innerHTML;
           document.body.getElementsByClassName('aname')[0].value = fullname;
-          if (evt == 'JSConf.Asia Ticket'||evt == 'Early-Buddy JSConf.Asia Ticket')
+          if (evt == 'JSConf.Asia Ticket'||evt == 'Early-Buddy JSConf.Asia Ticket' || evt == 'JSConf.Asia')
             document.body.getElementsByClassName('toggle-js')[0].checked = true;
           if (evt == 'Front-End TL;DR')
             document.body.getElementsByClassName('toggle-tldr')[0].checked = true;
@@ -582,7 +582,7 @@ if (Meteor.isClient) {
             document.body.getElementsByClassName('toggle-kopi')[0].checked = true;
           if (evt == 'Haskell Meetup Web-Dev Edition')
             document.body.getElementsByClassName('toggle-haskell')[0].checked = true;
-          if (evt == 'CSSConf.Asia Ticket' || evt == 'Early-Buddy CSSConf.Asia Ticket')
+          if (evt == 'CSSConf.Asia Ticket' || evt == 'Early-Buddy CSSConf.Asia Ticket' || evt=='CSSConf.Asia')
             document.body.getElementsByClassName('toggle-css')[0].checked = true;
           if (evt == 'Rails Girls (DevFest.Asia Edition)')
             document.body.getElementsByClassName('toggle-rails')[0].checked = true;
@@ -600,10 +600,25 @@ if (Meteor.isClient) {
             document.body.getElementsByClassName('toggle-bots')[0].checked = true;
           if (evt == 'DevFest.Asia Festival Ticket' || evt == 'Early-Buddy Festival Ticket')
           {
-            document.body.getElementsByClassName('toggle-js')[0].checked = true;
-            document.body.getElementsByClassName('toggle-css')[0].checked = true;
+            document.body.getElementsByClassName('toggle-css')[0].checked=true;
+            document.body.getElementsByClassName('toggle-js')[0].checked=true;
+            document.body.getElementsByClassName('toggle-grumpy')[0].checked=true;
+            document.body.getElementsByClassName('toggle-retreat')[0].checked=true;
+            document.body.getElementsByClassName('toggle-shdh')[0].checked=true;
+            document.body.getElementsByClassName('toggle-node')[0].checked=true;
+            document.body.getElementsByClassName('toggle-careers')[0].checked=true;
+            document.body.getElementsByClassName('toggle-ios')[0].checked=true;
+            document.body.getElementsByClassName('toggle-tldr')[0].checked=true;
+            document.body.getElementsByClassName('toggle-ux')[0].checked=true;
+            document.body.getElementsByClassName('toggle-talkjs')[0].checked=true;
+            document.body.getElementsByClassName('toggle-haskell')[0].checked=true;
+            document.body.getElementsByClassName('toggle-bots')[0].checked=true;
+            document.body.getElementsByClassName('toggle-rails')[0].checked=true;
+            document.body.getElementsByClassName('toggle-audio')[0].checked=true;
+            document.body.getElementsByClassName('toggle-kopi')[0].checked=true;
           }
-          //todo what is retreat?
+          if (evt == 'Global Day of Coderetreat')
+            document.body.getElementsByClassName('toggle-retreat')[0].checked = true;
         }
       }
     }
