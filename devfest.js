@@ -500,7 +500,11 @@ if (Meteor.isClient) {
     "submit .search": function(event){
       event.preventDefault();
       var alldata = JSON.parse(localStorage.getItem("mydata"));
-      var fnd = alldata[event.target.name.value];
+      var fnd = [];
+      if (event.target.name.value)
+        fnd = alldata[event.target.name.value];
+      else
+        fnd = getByEmail(alldata, event.target.email.value);
       Session.set("numrows",0);
       var res = document.getElementById('results');
       while (res.children.length > 1)
@@ -530,6 +534,8 @@ if (Meteor.isClient) {
           var cnc = row.insertCell(6);
           cnc.innerHTML = fnd[i]['cancelled'];
         }
+        event.target.name.value = "";
+        event.target.email.value = "";
       }
     },
     "submit .result-form":function(event){
