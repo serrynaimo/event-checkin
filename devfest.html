@@ -37,8 +37,9 @@
       </button>
     </div>
     <div id="load-div" style="display:none">
-    	<button id="load-button" onclick="callScriptFunction()">Load</button>
+    	<button id="load-button" onclick="callScriptFunction()">Load From Google Spreadsheet</button>
  	</div>
+ 	<h2>Search:</h2>
     <form class="search">
     	<table style="width:80%">
     		<tr>
@@ -54,7 +55,7 @@
     		</tr>
     	</table>
     </form>
-    <div>
+    <div id="resultdiv" style="display:none">
     	<form class = "result-form">
 	    	<table id="results" style="width:80%">
 	    		<tr>
@@ -66,11 +67,12 @@
 	    			<td>Twitter</td>
 	    			<td>Cancelled</td>
 	    		</tr>
-	    	</table>
-	    	<input type="submit" value="Submit">
+	    	</table>	    	
+		    <input type="submit" value="Fill In Below">
 	    </form>
     </div>
     <pre id="output"></pre>
+    <h2>Create User:</h2>
 	<form class="new-entry">
 		<table style="width:80%">
 			<tr>

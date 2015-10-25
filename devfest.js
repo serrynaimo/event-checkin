@@ -509,8 +509,10 @@ if (Meteor.isClient) {
       var res = document.getElementById('results');
       while (res.children.length > 1)
         res.removeChild(res.children[1]);
+      var resultDiv = document.getElementById('resultdiv');
       if (fnd)
-      {
+      {        
+        resultDiv.style.display='inline';
         Session.set("numrows",fnd.length);
         var res = document.getElementById('results');
         for (i = 0; i < fnd.length; i++)
@@ -537,6 +539,8 @@ if (Meteor.isClient) {
         event.target.name.value = "";
         event.target.email.value = "";
       }
+      else
+        resultDiv.style.display='none';
     },
     "submit .result-form":function(event){
       event.preventDefault();
