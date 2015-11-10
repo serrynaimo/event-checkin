@@ -563,7 +563,6 @@ if (Meteor.isClient) {
     },
     "submit .result-form":function(event){
       event.preventDefault();
-      document.getElementById("lastname").focus();
       var nrows = Session.get("numrows");
       var tb = document.getElementById('results');
       document.body.getElementsByClassName('toggle-css')[0].checked=false;
