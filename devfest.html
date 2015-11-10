@@ -4,25 +4,27 @@
 
 <template name="navigation">
 	<ul>
-		<li><a href="{{pathFor route='home'}}">Home</a></li>
+		<li><a href="{{pathFor route='home'}}">Login</a></li>
 		{{#if currentUser}}
-			<li><a href="{{pathFor route='add'}}">Add User</a></li>
-			<li><a href="{{pathFor route='edit'}}">Edit User</a></li>
-			<li><a href="{{pathFor route='purchase'}}">Purchases</a></li>
+			<li><a href="{{pathFor route='add'}}">Add</a></li>
+			<li><a href="{{pathFor route='edit'}}">Edit</a></li>
+			<li><a href="{{pathFor route='purchase'}}">Purchase</a></li>
 			<li><a href="{{pathFor route='log'}}">Log</a></li>
 		{{/if}}
-		<li><a href="{{pathFor route='event'}}">Event</a></li>
+		<li><a href="{{pathFor route='event'}}">Check-In</a></li>
 	</ul>
 </template>
 
 <template name="ApplicationLayout">
-
-  		<h1>DevFest Asia!</h1>
+	<header>
+  		<h1>DevFest.Asia</h1>
 		{{> navigation}}
-		{{> yield}}
+	</header>
+	{{> yield}}
 </template>
 
 <template name="home">
+  <h1>Login</h1>
   {{> loginButtons}}
 </template>
 
@@ -41,14 +43,14 @@
  	</div>
  	<h2>Search:</h2>
     <form class="search">
-    	<table style="width:80%">
+    	<table style="width:40%">
     		<tr>
     			<td>Name</td>
     			<td>Email</td>
     		</tr>
     		<tr>
-    			<td><input type="text" name="name" class="bname" placeholder="Enter last name"/></td>
-    			<td><input type="text" name="email" class="email" placeholder="Enter email"/></td>
+    			<td><input type="text" id="lastname" name="name" class="bname" placeholder="Enter last name" autocomplete="off"/></td>
+    			<td><input type="text" name="email" class="email" placeholder="Enter email" autocomplete="off"/></td>
     		</tr>
     		<tr>
     			<td><input type="submit" style="display:none"/></td>
@@ -76,9 +78,15 @@
 	<form class="new-entry">
 		<table style="width:80%">
 			<tr>
-				<td><input type="text" name="name" class="aname" placeholder="Enter name"/></td>
+				<td colspan="2"><input type="text" name="name" class="aname" placeholder="Enter name" autocomplete="off"/></td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
 			</tr>
 			{{> eventsradio}}
+			<tr>
+				<td>&nbsp;</td>
+			</tr>
 			<tr>
 				<td><input type="radio" name="amount" value="5" checked>$5</td>
 				<td><input type="radio" name="amount" value="10">$10</td>
@@ -88,17 +96,19 @@
 				<td><input type="radio" name="amount" value="30">$30</td>
 			</tr>
 			<tr>
-				<td><input type="text" name="id" class="aid" placeholder="Enter ID for new attendee" /></td>
+				<td>&nbsp;</td>
+			</tr>
+			<tr>
 				<td><input type="radio" name="type" value="normal" checked>Normal</td>
 				<td><input type="radio" name="type" value="speaker">Speaker</td>
 				<td><input type="radio" name="type" value="staff">Staff</td>
 			</tr>
-			<tr>
-				<td><input type="submit" style="display:none"/></td>
-			</tr>
+			<br/>
 		</table>
+		<input type="text" name="id" id="wristid" class="aid" placeholder="Enter ID for new attendee" autocomplete="off" />
+		<input type="submit" style="display:none"/>
 	</form>
-	<ul>
+	<ul class="attendeelist">
 		{{#each attendees}}
 			{{> attend}}
 		{{/each}}
@@ -110,29 +120,40 @@
 	<form class="new-entry">
 		<table style="width:80%">
 			<tr>
-				<td><input type="radio" name="type" id="load-radio" value="load" checked>Load</td>
-				<td><input type="radio" name="type" value="modify">Modify</td>
+				<td><input type="radio" name="mode" id="load-radio" value="load" checked>Load</td>
+				<td><input type="radio" name="mode" value="modify">Modify</td>
 			</tr>
 			<tr>
-				<td><input type="text" name="name" class="aname" placeholder="Enter name"/></td>
+				<td>&nbsp;</td>
+			</tr>
+			<tr>
+				<td colspan="2"><input type="text" name="name" class="aname" placeholder="Enter name" autocomplete="off"/></td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
 			</tr>
 			{{> eventsradio}}
 			<tr>
-				<td><input type="text" name="money" class="amoney" placeholder="Enter amount of money in account" /></td>
+				<td>&nbsp;</td>
 			</tr>
 			<tr>
-				<td><input type="text" name="id" class="aid" placeholder="Enter ID" autofocus /></td>
+				<td colspan="2"><input type="text" name="money" class="amoney" placeholder="Enter amount of money in account" autocomplete="off"/></td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+			</tr>
+			<tr>
 				<td><input type="radio" name="type" value="normal">Normal</td>
 				<td><input type="radio" name="type" value="speaker">Speaker</td>
 				<td><input type="radio" name="type" value="staff">Staff</td>
 			</tr>
-			<tr>
-				<td><input type="submit" value="Submit" style="display:none"></td>
-				<td><button type="clear" name="clear" class="clear-button">Clear</button></td>
-			</tr>
 		</table>
+		<br/>
+		<input type="text" id="wristid" name="id" class="aid" placeholder="Enter ID" autocomplete="off" autofocus="autofocus"/>
+		<input type="submit" value="Submit" style="display:none">
+		<button type="clear" name="clear" class="clear-button">Clear</button>
 	</form>
-	<ul>
+	<ul class="attendeelist">
 		{{#each attendees}}
 			{{> attend}}
 		{{/each}}
@@ -174,17 +195,25 @@
 <template name="purchase">
 	<h1>Purchase</h1>
 	<form class="new-entry">
-		<table style="width:80%">
+		<table style="width:50%">
 			<tr>
-				<td><input type="radio" name="type" value="purchase" checked>Purchase</td>
+				<td><input type="radio" name="type" value="purchase" checked>Charge</td>
 				<td><input type="radio" name="type" value="checkbalance">Check Balance</td>
 				<td><input type="radio" name="type" value="undo">Undo Last</td>
 			</tr>
 			<tr>
-				<td><input type="text" name="id" class="aid" placeholder="Enter ID" /></td>
-				<td><input type="radio" name="amount" value="5">$5</td>
+				<td>&nbsp;</td>
+			</tr>
+			<tr>
+				<td><input type="radio" name="amount" value="5" checked>$5</td>
 				<td><input type="radio" name="amount" value="10">$10</td>
 				<td><input type="radio" name="amount" value="15">$15</td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+			</tr>
+			<tr>
+				<td><input type="text" name="id" class="aid" placeholder="Enter ID" autocomplete="off" autofocus="autofocus"/></td>
 			</tr>
 			<tr>
 				<td>Balance: {{balance}}</td>
@@ -197,7 +226,6 @@
 </template>
 
 <template name="event">
-	<h1>Event</h1>
 	<form class="new-entry">
 		<div class="checkincover {{event}}">
 			<div class="bg"></div>

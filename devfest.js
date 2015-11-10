@@ -474,7 +474,6 @@ if (Meteor.isClient) {
             Meteor.call("modPrice", text, mval);
           }
         }
-        event.target.id.value = "";
       }
       else if (type == 'checkbalance')
       {
@@ -485,7 +484,6 @@ if (Meteor.isClient) {
           if (fnd.length == 1)
             Session.set("balance",fnd[0]['money']);
         }
-        event.target.id.value = "";
       }
       else if (type == 'undo')
       {
@@ -499,8 +497,9 @@ if (Meteor.isClient) {
             Meteor.call("undo", text);
           }
         }
-        event.target.id.value = "";
       }
+      event.target.id.value = "";
+      event.target.id.focus();
     }
   });
   Template.add.events({
@@ -515,6 +514,7 @@ if (Meteor.isClient) {
       Meteor.call("addEntry", text, mval, nm, makeChecked());
       event.target.id.value="";
       event.target.name.value="";
+      document.getElementById("lastname").focus();
     },
     "submit .search": function(event){
       event.preventDefault();
@@ -563,6 +563,7 @@ if (Meteor.isClient) {
     },
     "submit .result-form":function(event){
       event.preventDefault();
+      document.getElementById("lastname").focus();
       var nrows = Session.get("numrows");
       var tb = document.getElementById('results');
       document.body.getElementsByClassName('toggle-css')[0].checked=false;
@@ -653,13 +654,13 @@ if (Meteor.isClient) {
   Template.edit.events({
     "submit .new-entry": function (event) {
       event.preventDefault();
-      var type = event.target.type.value;
-      if (type == 'modify')
+      var mode = event.target.mode.value;
+      if (mode == 'modify')
       {
         doModify();
         doClear();
       }
-      else if (type == 'load')
+      else if (mode == 'load')
       {
         //load entry from db and fill in info
         var myid = document.body.getElementsByClassName('aid')[0].value;
@@ -691,9 +692,11 @@ if (Meteor.isClient) {
           document.body.getElementsByClassName('toggle-audio')[0].checked=fnd[0]['audioChecked'];
           document.body.getElementsByClassName('toggle-kopi')[0].checked=fnd[0]['kopiChecked'];
           document.body.getElementsByClassName('toggle-cssmeetup')[0].checked=fnd[0]['cssmeetupChecked'];
-          event.target.type.value = 'modify';
+          event.target.mode.value = 'modify';
+          event.target.id.value = '';
         }
       }
+      document.getElementById("wristid").focus();
     },
     "click .clear-button":function(event){
       doClear();

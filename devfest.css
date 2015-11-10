@@ -1,7 +1,72 @@
 /* CSS declarations go here */
 
+@import url('http://fonts.googleapis.com/css?family=Doppio+One|Sue+Ellen+Francisco');
+
 body {
     font-family: 'Doppio One';
+}
+
+header {
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: radial-gradient(circle,#55a2e8,#288ae2);
+    color: #fff;
+    display: flex;
+    box-shadow: 0 2px 2px rgba(0,0,0,.3);
+}
+
+header h1 {
+    font-family: 'Sue Ellen Francisco', cursive;
+    padding: 3px 15px 0;
+    margin: 0;
+    flex: 2;
+    text-transform: uppercase;
+    text-shadow: 1px 1px 0 #000;
+    letter-spacing: 2px;
+    font-size: 1.5em;
+}
+
+header ul {
+    flex: 6;
+    padding: 15px 20px;
+    margin: 0;
+    text-align: right;
+}
+
+header ul li {
+    list-style-type: none;
+    display: inline-block;
+    margin-left: 20px;
+}
+
+header ul li a {
+    color: #fff;
+    font-weight: normal;
+    text-decoration: none;
+}
+
+h1 {
+    margin-top: 55px;
+}
+
+input[type=text] {
+    padding: 5px 10px;
+    font-size: 1em;
+}
+
+.attendeelist {
+    position: fixed;
+    top: 37px;
+    right: 0;
+    bottom: 0;
+    width: 19vw;
+    padding: 10px;
+    border-left: 1px solid #ccc;
+    overflow: auto;
+    color: gray;
 }
 
 .checkincover {
@@ -13,6 +78,7 @@ body {
     text-align: center;
     color: #fff;
     background: #000;
+    z-index: 2;
 }
 
 .checkincover .eventlist {
@@ -34,13 +100,13 @@ body {
     background-size: cover;
     background-position: 50% 50%;
     -webkit-filter: blur(10px);
-    z-index: 1;
+    z-index: 3;
     opacity: .7;
 }
 
 .checkincover .content {
     position: relative;
-    z-index: 2;
+    z-index: 4;
 }
 
 .checkincover img {
