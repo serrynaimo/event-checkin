@@ -16,7 +16,7 @@
 </template>
 
 <template name="ApplicationLayout">
-	
+
   		<h1>DevFest Asia!</h1>
 		{{> navigation}}
 		{{> yield}}
@@ -67,7 +67,7 @@
 	    			<td>Twitter</td>
 	    			<td>Cancelled</td>
 	    		</tr>
-	    	</table>	    	
+	    	</table>
 		    <input type="submit" value="Fill In Below">
 	    </form>
     </div>
@@ -76,9 +76,9 @@
 	<form class="new-entry">
 		<table style="width:80%">
 			<tr>
-				<td><input type="text" name="name" class="aname" placeholder="Enter name"/></td>			
+				<td><input type="text" name="name" class="aname" placeholder="Enter name"/></td>
 			</tr>
-			{{> eventsradio}}						
+			{{> eventsradio}}
 			<tr>
 				<td><input type="radio" name="amount" value="5" checked>$5</td>
 				<td><input type="radio" name="amount" value="10">$10</td>
@@ -149,7 +149,7 @@
 		<td><input type="checkbox" name="cssmeetup" class="toggle-cssmeetup"/>CSS Meetup</td>
 	</tr>
 	<tr>
-		<td><input type="checkbox" name="ios" class="toggle-ios"/>iOSDevScout</td>	
+		<td><input type="checkbox" name="ios" class="toggle-ios"/>iOSDevScout</td>
 		<td><input type="checkbox" name="tldr" class="toggle-tldr"/>FrontEndTLDR</td>
 		<td><input type="checkbox" name="ux" class="toggle-ux"/>HackingUX</td>
 		<td><input type="checkbox" name="talkjs" class="toggle-talkjs"/>TalkJS</td>
@@ -162,12 +162,13 @@
 		<td><input type="checkbox" name="rails" class="toggle-rails"/>RailsGirls</td>
 		<td><input type="checkbox" name="audio" class="toggle-audio"/>WebAudio</td>
 		<td><input type="checkbox" name="kopi" class="toggle-kopi"/>KopiJS</td>
+		<td><input type="checkbox" name="cssmeetup" class="toggle-cssmeetup"/>CSSMeetup</td>
 	</tr>
 </template>
 
 <template name="attend">
 	<li>{{id}}, {{name}}, {{cssChecked}}, {{jsChecked}}, {{money}}</li>
-	
+
 </template>
 
 <template name="purchase">
@@ -187,7 +188,7 @@
 			</tr>
 			<tr>
 				<td>Balance: {{balance}}</td>
-			</tr>			
+			</tr>
 			<tr>
 				<td><input type="submit" value="Submit" style="display:none"></td>
 			</tr>
@@ -198,57 +199,52 @@
 <template name="event">
 	<h1>Event</h1>
 	<form class="new-entry">
-		<table style="width:80%">
-			<tr>
-				<td><input type="radio" name="event" value="grumpy">GrumpyGit</td>
-				<td><input type="radio" name="event" value="welcome">WelcomeParty</td>
-				<td><input type="radio" name="event" value="retreat">Coderetreat</td>
-				<td><input type="radio" name="event" value="shdh">SHDH</td>
-				<td><input type="radio" name="event" value="node">NodeSchool</td>
-				<td><input type="radio" name="event" value="careers">DevCareers</td>
-			</tr>
-			<tr>
-				<td><input type="radio" name="event" value="ios">iOSDevScout</td>			
-				<td><input type="radio" name="event" value="tldr">FrontEndTLDR</td>
-				<td><input type="radio" name="event" value="ux">HackingUX</td>
-				<td><input type="radio" name="event" value="talkjs">TalkJS</td>
-				<td><input type="radio" name="event" value="css">CSSConf</td>
-				<td><input type="radio" name="event" value="cssparty">CSSAfterParty</td>
-				<td><input type="radio" name="event" value="haskell">Haskell</td>
-			</tr>
-			<tr>
-				<td><input type="radio" name="event" value="js1">JSConfDay1</td>
-				<td><input type="radio" name="event" value="js2">JSConfDay2</td>
-				<td><input type="radio" name="event" value="bots">NodeBots</td>
-				<td><input type="radio" name="event" value="jsparty">JSAfterParty</td>
-				<td><input type="radio" name="event" value="rails">RailsGirls</td>
-				<td><input type="radio" name="event" value="audio">WebAudio</td>
-				<td><input type="radio" name="event" value="kopi">KopiJS</td>
-			</tr>
-		</table><br>
-		<input type="text" name="id" class="aid" placeholder="Enter ID"/>
+		<div class="checkincover {{event}}">
+			<div class="bg"></div>
+			<div class="content">
+				<img src="http://2015.devfest.asia/images/logo.png" />
+				<h2 class="event"></h2>
+				<span class="scan {{allowed}} ">Scan your wrist-band to check-in.</span>
+				<span class="print {{allowed}}">Welcome, {{name}} :)</span>
+				<span class="sorry {{allowed}}">Sorry, please come talk to us<br/>at the registration desk.</span>
+				<input type="text" name="id" class="aid" placeholder="" autocomplete="off" autofocus="autofocus" />
+				<div class="eventlist">
+					<input type="radio" name="event" value="grumpy">GrumpyGit
+					<input type="radio" name="event" value="welcome">WelcomeParty
+					<input type="radio" name="event" value="retreat">Coderetreat
+					<input type="radio" name="event" value="shdh">SHDH
+					<input type="radio" name="event" value="node">NodeSchool
+					<input type="radio" name="event" value="careers">DevCareers
+					<input type="radio" name="event" value="ios">iOSDevScout
+					<input type="radio" name="event" value="tldr">FrontEndTLDR
+					<input type="radio" name="event" value="ux">HackingUX
+					<input type="radio" name="event" value="talkjs">TalkJS
+					<input type="radio" name="event" value="css">CSSConf
+					<input type="radio" name="event" value="cssparty">CSSAfterParty
+					<input type="radio" name="event" value="haskell">Haskell
+					<input type="radio" name="event" value="js1">JSConfDay1
+					<input type="radio" name="event" value="js2">JSConfDay2
+					<input type="radio" name="event" value="bots">NodeBots
+					<input type="radio" name="event" value="jsparty">JSAfterParty
+					<input type="radio" name="event" value="rails">RailsGirls
+					<input type="radio" name="event" value="audio">WebAudio
+					<input type="radio" name="event" value="kopi">KopiJS
+					<input type="radio" name="event" value="cssmeetup">CSSMeetup
+				</div>
+			</div>
+		</div>
 	</form>
-	<div class="printlabel">
-
-    <span class="name">
-        {{name}}
-    </span>
-
-    <span class="event">
-        {{event}}
-    </span>
-
-	</div>
-	<div>
-	Allowed: {{allowed}}<br>
-	Name: {{name}}
+	<div class="printlabel {{allowed}} {{event}}">
+	    <span class="name">
+	        {{name}}
+	    </span>
+	    <span class="event"></span>
 	</div>
 </template>
 
 <template name="log">
 	<h1>Log</h1>
-	<textarea rows="30" cols="120" class="log-text">
-	</textarea>
+	<textarea rows="30" cols="120" class="log-text"></textarea>
 </template>
 
 <template name="logitem">

@@ -1,4 +1,96 @@
 /* CSS declarations go here */
+
+body {
+    font-family: 'Doppio One';
+}
+
+.checkincover {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    text-align: center;
+    color: #fff;
+    background: #000;
+}
+
+.checkincover .eventlist {
+    display: none;
+}
+
+.configure .checkincover .eventlist {
+    display: block;
+}
+
+.checkincover .bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: darkgray;
+    background-repeat: none;
+    background-size: cover;
+    background-position: 50% 50%;
+    -webkit-filter: blur(10px);
+    z-index: 1;
+    opacity: .7;
+}
+
+.checkincover .content {
+    position: relative;
+    z-index: 2;
+}
+
+.checkincover img {
+    margin: 100px auto 0;
+    width: 150px;
+}
+
+.checkincover h2 {
+    font-size: 4em;
+    text-shadow: 0 10px 20px rgba(0,0,0,.5);
+}
+
+.checkincover span {
+    display: none;
+    font-size: 2.4em;
+    padding: 0 200px;
+    text-shadow: 0 10px 20px rgba(0,0,0,.5);
+}
+
+body:not(.checked) .checkincover .scan {
+    display: block;
+}
+
+.checked .checkincover .print.YES {
+    display: block;
+}
+
+.checked .checkincover .sorry.NO {
+    display: block;
+}
+
+.checkincover input[type=text] {
+    background: transparent;
+    margin: 2em;
+    text-align: center;
+    color: #fff;
+    border: 1px solid #fff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    outline: 0;
+}
+
+.checked .checkincover input[type=text] {
+    visibility: hidden;
+}
+
+.checkincover input[type=radio] {
+    margin-left: 20px;
+}
+
 .printlabel {
 	display: none;
     width: 400px;
@@ -14,7 +106,6 @@
     top: 48px;
     padding: 0 30px;
     font-size: 3.5em;
-    font-family: 'Doppio One';
     text-align: center;
     line-height: 1em;
 }
@@ -43,10 +134,160 @@
 
     .printlabel > * {
         display: block !important;
+        color: #000 !important;
     }
 
     @page {
         margin: 0;
     }
 
+}
+
+
+
+.grumpy .event:after {
+    content: "Grumpy Gits";
+}
+.grumpy .bg {
+    background-image: url('http://2015.devfest.asia/images/events/grumpy-gits-pic.jpg');
+}
+
+.welcome .event:after {
+    content: "Welcome Party";
+}
+.welcome .bg {
+    background-image: url('http://2015.devfest.asia/images/events/devfestparty.jpg');
+}
+
+.css .event:after {
+    content: "CSSConf.Asia";
+}
+.css .bg {
+    background-image: url('http://2015.devfest.asia/images/events/cssconf.jpg');
+}
+
+.cssparty .event:after {
+    content: "CSSConf.Asia After-Party";
+}
+.cssparty .bg {
+    background-image: url('http://2015.devfest.asia/images/events/cssconfparty.jpg');
+}
+
+.js1 .event:after {
+    content: "JSConf.Asia (Day 1)";
+}
+.js1 .bg {
+    background-image: url('http://2015.devfest.asia/images/events/jsconf1.jpg');
+}
+
+.js2 .event:after {
+    content: "JSConf.Asia (Day 2)";
+}
+.js2 .bg {
+    background-image: url('http://2015.devfest.asia/images/events/jsconf2.jpg');
+}
+
+.jsparty .event:after {
+    content: "JSConf.Asia After-Party";
+}
+.jsparty .bg {
+    background-image: url('http://2015.devfest.asia/images/events/jsconfparty.jpg');
+}
+
+.retreat .event:after {
+    content: "Global Day of Coderetreat";
+}
+.retreat .bg {
+    background-image: url('http://2015.devfest.asia/images/events/coderetreat.jpg');
+}
+
+.shdh .event:after {
+    content: "SuperHappyDevHouse_v4";
+}
+.shdh .bg {
+    background-image: url('http://2015.devfest.asia/images/events/shdh.png');
+}
+
+.node .event:after {
+    content: "NodeSchool";
+}
+.node .bg {
+    background-image: url('http://2015.devfest.asia/images/events/nodeschool2.png');
+}
+
+.careers .event:after {
+    content: "Dev Careers Meetup";
+}
+.careers .bg {
+    background-image: url('http://2015.devfest.asia/images/events/workingmeetup.jpg');
+}
+
+.ios .event:after {
+    content: "iOS Dev Scout Workshop";
+}
+.ios .bg {
+    background-image: url('http://2015.devfest.asia/images/events/ios-dev-scout.png');
+}
+
+.talkjs .event:after {
+    content: "Talk.js";
+}
+.talkjs .bg {
+    background-image: url('http://2015.devfest.asia/images/events/talk-js.jpeg');
+}
+
+.tldr .event:after {
+    content: "Front End TL;DR";
+}
+.tldr .bg {
+    background-image: url('http://2015.devfest.asia/images/events/frontendtldr.jpg');
+}
+
+.ux .event:after {
+    content: "Hacking UX";
+}
+.ux .bg {
+    background-image: url('http://2015.devfest.asia/images/events/hackingux.jpg');
+}
+
+.bots .event:after {
+    content: "NodeBots - Sumo Bot Battles";
+}
+.bots .bg {
+    background-image: url('http://2015.devfest.asia/images/events/nodebots.png');
+}
+
+.haskell .event:after {
+    content: "Haskell with Web Technologies";
+}
+.haskell .bg {
+    background-image: url('http://2015.devfest.asia/images/events/haskell.png');
+}
+
+.rails .event:after {
+    content: "Rails Girls";
+}
+.rails .bg {
+    background-image: url('http://2015.devfest.asia/images/events/railsgirls.jpg');
+}
+
+.audio .event:after {
+    content: "WebAudio Hack Day";
+}
+.audio .bg {
+    background-image: url('http://2015.devfest.asia/images/events/webaudio-js.jpg');
+}
+
+.kopi .event:after {
+    content: "KopiJS";
+}
+.kopi .bg {
+    background-image: url('http://2015.devfest.asia/images/events/kopijs.jpg');
+}
+
+.cssmeetup .event:after {
+    content: "CSS Singapore Meetup";
+}
+.cssmeetup .bg {
+    background-image: url('http://2015.devfest.asia/images/events/csssingapore.png');
 }

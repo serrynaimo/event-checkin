@@ -21,7 +21,7 @@ Meteor.methods({
     }
   },
   addEntry: function (text, money, name, checked) {
-    var currentUser = Meteor.userId();   
+    var currentUser = Meteor.userId();
     if (currentUser)
     {
       var uname = Meteor.user().username;
@@ -48,7 +48,7 @@ Meteor.methods({
               uxChecked : checked['ux'],
               talkjsChecked : checked['talkjs'],
               cssChecked : checked['css'],
-              haskellChecked : checked['haskell'],              
+              haskellChecked : checked['haskell'],
               jsChecked : checked['js'],
               botsChecked : checked['bots'],
               railsChecked : checked['rails'],
@@ -72,7 +72,7 @@ Meteor.methods({
     }
   },
   modID: function (id, name, money, checked) {
-    var currentUser = Meteor.userId();   
+    var currentUser = Meteor.userId();
     if (currentUser)
     {
       var uname = Meteor.user().username;
@@ -80,7 +80,7 @@ Meteor.methods({
       {
         fnd = Attendees.find({name:name}).fetch();
         if (fnd.length == 1)
-        {          
+        {
           var oid = fnd[0]._id;
           fnd = Attendees.find({id:id}).fetch();
           if (fnd.length == 0)
@@ -98,7 +98,7 @@ Meteor.methods({
               uxChecked : checked['ux'],
               talkjsChecked : checked['talkjs'],
               cssChecked : checked['css'],
-              haskellChecked : checked['haskell'],              
+              haskellChecked : checked['haskell'],
               jsChecked : checked['js'],
               botsChecked : checked['bots'],
               railsChecked : checked['rails'],
@@ -122,7 +122,7 @@ Meteor.methods({
     }
   },
    modName: function (id, name, money, checked) {
-    var currentUser = Meteor.userId();   
+    var currentUser = Meteor.userId();
     if (currentUser)
     {
       var uname = Meteor.user().username;
@@ -148,7 +148,7 @@ Meteor.methods({
               uxChecked : checked['ux'],
               talkjsChecked : checked['talkjs'],
               cssChecked : checked['css'],
-              haskellChecked : checked['haskell'],              
+              haskellChecked : checked['haskell'],
               jsChecked : checked['js'],
               botsChecked : checked['bots'],
               railsChecked : checked['rails'],
@@ -172,7 +172,7 @@ Meteor.methods({
     }
   },
   modOther: function (id, name, money, checked) {
-    var currentUser = Meteor.userId();   
+    var currentUser = Meteor.userId();
     if (currentUser)
     {
       var uname = Meteor.user().username;
@@ -194,7 +194,7 @@ Meteor.methods({
             uxChecked : checked['ux'],
             talkjsChecked : checked['talkjs'],
             cssChecked : checked['css'],
-            haskellChecked : checked['haskell'],              
+            haskellChecked : checked['haskell'],
             jsChecked : checked['js'],
             botsChecked : checked['bots'],
             railsChecked : checked['rails'],
@@ -217,7 +217,7 @@ Meteor.methods({
     }
   },
   modPrice: function(id,money){
-    var currentUser = Meteor.userId();   
+    var currentUser = Meteor.userId();
     if (currentUser)
     {
       var uname = Meteor.user().username;
@@ -261,7 +261,7 @@ Meteor.methods({
     }
   },
   undo: function(id){
-    var currentUser = Meteor.userId();   
+    var currentUser = Meteor.userId();
     if (currentUser)
     {
       var uname = Meteor.user().username;
@@ -271,7 +271,7 @@ Meteor.methods({
         if (fnd.length == 1)
         {
           var lval = parseInt(fnd[0]['last']);
-          var nb = parseInt(fnd[0]['money'])+lval;          
+          var nb = parseInt(fnd[0]['money'])+lval;
           var oid = fnd[0]._id;
           Attendees.update(oid, {$set: {money:nb.toString(),last:'0'}});
           Log.insert({
@@ -283,7 +283,7 @@ Meteor.methods({
             amount : '-'+lval.toString(),
             event : "",
             success : true
-          });          
+          });
         }
       }
     }
@@ -296,12 +296,12 @@ Router.route('/',{
 });
 Router.route('/add',{
   onBeforeAction: function() {
-    var currentUser = Meteor.userId();   
+    var currentUser = Meteor.userId();
     if (currentUser)
     {
       var uname = Meteor.user().username;
       if (uname == "admin")
-      {        
+      {
         this.next();
       }
       else
@@ -311,7 +311,7 @@ Router.route('/add',{
 });
 Router.route('/edit',{
   onBeforeAction: function() {
-    var currentUser = Meteor.userId();   
+    var currentUser = Meteor.userId();
     if (currentUser)
     {
       var uname = Meteor.user().username;
@@ -324,7 +324,7 @@ Router.route('/edit',{
 });
 Router.route('/purchase',{
   onBeforeAction: function() {
-    var currentUser = Meteor.userId();   
+    var currentUser = Meteor.userId();
     if (currentUser)
     {
       var uname = Meteor.user().username;
@@ -338,7 +338,7 @@ Router.route('/purchase',{
 Router.route('/event');
 Router.route('/log',{
   onBeforeAction: function() {
-    var currentUser = Meteor.userId();   
+    var currentUser = Meteor.userId();
     if (currentUser)
     {
       var uname = Meteor.user().username;
@@ -402,13 +402,16 @@ if (Meteor.isClient) {
   Template.event.events({
     "submit .new-entry":function(event){
       event.preventDefault();
-      var di = event.target.event.value;
+      var di = event.target.event.value || Session.get("theevent");
       Session.set("theevent",di);
       Session.set("allowed",false);
-      if (di)
+      var text = event.target.id.value;
+      if(text == 'configure') {
+        document.body.classList.toggle('configure');
+      }
+      else if (text)
       {
-        var text = event.target.id.value;
-        if (text)
+        if (di)
         {
           var fnd = Attendees.find({id:text}).fetch();
           if (fnd.length == 1)
@@ -439,8 +442,19 @@ if (Meteor.isClient) {
             Session.set("name",fnd[0]['name']);
           }
         }
+        setTimeout(function() {
+          if(success) {
+            window.print();
+          }
+          document.body.classList.remove('checked');
+          event.target.id.focus();
+        }, 4000);
+        document.body.classList.add('checked');
       }
       event.target.id.value = "";
+      event.target.id.focus();
+
+      console.log("defaults write com.google.Chrome DisablePrintPreview -boolean true\nopen /Applications/Google\ Chrome.app --args --disable-print-preview --kiosk http://localhost:3000/event");
     }
   });
   Template.purchase.events({
@@ -460,7 +474,7 @@ if (Meteor.isClient) {
             Meteor.call("modPrice", text, mval);
           }
         }
-        event.target.id.value = "";        
+        event.target.id.value = "";
       }
       else if (type == 'checkbalance')
       {
@@ -516,7 +530,7 @@ if (Meteor.isClient) {
         res.removeChild(res.children[1]);
       var resultDiv = document.getElementById('resultdiv');
       if (fnd)
-      {        
+      {
         resultDiv.style.display='inline';
         Session.set("numrows",fnd.length);
         var res = document.getElementById('results');
@@ -525,7 +539,7 @@ if (Meteor.isClient) {
           var row = res.insertRow(1);
           var checkbox = document.createElement('input');
           checkbox.type = "checkbox";
-          checkbox.name = "selected" + i.toString();          
+          checkbox.name = "selected" + i.toString();
           var chkb = row.insertCell(0);
           chkb.appendChild(checkbox);
           var first = row.insertCell(1);
@@ -646,7 +660,7 @@ if (Meteor.isClient) {
         doClear();
       }
       else if (type == 'load')
-      {      
+      {
         //load entry from db and fill in info
         var myid = document.body.getElementsByClassName('aid')[0].value;
         var myname = document.body.getElementsByClassName('aname')[0].value;
