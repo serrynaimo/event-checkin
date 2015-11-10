@@ -80,7 +80,7 @@
 			</tr>
 			{{> eventsradio}}						
 			<tr>
-				<td><input type="radio" name="amount" value="5">$5</td>
+				<td><input type="radio" name="amount" value="5" checked>$5</td>
 				<td><input type="radio" name="amount" value="10">$10</td>
 				<td><input type="radio" name="amount" value="15">$15</td>
 				<td><input type="radio" name="amount" value="20">$20</td>
@@ -89,6 +89,9 @@
 			</tr>
 			<tr>
 				<td><input type="text" name="id" class="aid" placeholder="Enter ID for new attendee" /></td>
+				<td><input type="radio" name="type" value="normal" checked>Normal</td>
+				<td><input type="radio" name="type" value="speaker">Speaker</td>
+				<td><input type="radio" name="type" value="staff">Staff</td>
 			</tr>
 			<tr>
 				<td><input type="submit" style="display:none"/></td>
@@ -119,6 +122,9 @@
 			</tr>
 			<tr>
 				<td><input type="text" name="id" class="aid" placeholder="Enter ID" autofocus /></td>
+				<td><input type="radio" name="type" value="normal">Normal</td>
+				<td><input type="radio" name="type" value="speaker">Speaker</td>
+				<td><input type="radio" name="type" value="staff">Staff</td>
 			</tr>
 			<tr>
 				<td><input type="submit" value="Submit" style="display:none"></td>
@@ -140,6 +146,7 @@
 		<td><input type="checkbox" name="shdh" class="toggle-shdh"/>SHDH</td>
 		<td><input type="checkbox" name="node" class="toggle-node"/>NodeSchool</td>
 		<td><input type="checkbox" name="careers" class="toggle-careers"/>DevCareers</td>
+		<td><input type="checkbox" name="cssmeetup" class="toggle-cssmeetup"/>CSS Meetup</td>
 	</tr>
 	<tr>
 		<td><input type="checkbox" name="ios" class="toggle-ios"/>iOSDevScout</td>	

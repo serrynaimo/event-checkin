@@ -53,7 +53,8 @@ Meteor.methods({
               botsChecked : checked['bots'],
               railsChecked : checked['rails'],
               audioChecked : checked['audio'],
-              kopiChecked : checked['kopi']
+              kopiChecked : checked['kopi'],
+              cssmeetupChecked : checked['cssmeetup']
             });
             Log.insert({
               id : text,
@@ -102,7 +103,8 @@ Meteor.methods({
               botsChecked : checked['bots'],
               railsChecked : checked['rails'],
               audioChecked : checked['audio'],
-              kopiChecked : checked['kopi']
+              kopiChecked : checked['kopi'],
+              cssmeetupChecked : checked['cssmeetup']
             }});
             Log.insert({
               id : id,
@@ -151,7 +153,8 @@ Meteor.methods({
               botsChecked : checked['bots'],
               railsChecked : checked['rails'],
               audioChecked : checked['audio'],
-              kopiChecked : checked['kopi']
+              kopiChecked : checked['kopi'],
+              cssmeetupChecked : checked['cssmeetup']
             }});
             Log.insert({
               id : id,
@@ -196,7 +199,8 @@ Meteor.methods({
             botsChecked : checked['bots'],
             railsChecked : checked['rails'],
             audioChecked : checked['audio'],
-            kopiChecked : checked['kopi']
+            kopiChecked : checked['kopi'],
+            cssmeetupChecked : checked['cssmeetup']
           }});
           Log.insert({
               id : id,
@@ -428,7 +432,8 @@ if (Meteor.isClient) {
               (fnd[0]['jsChecked'] && di == 'jsparty') ||
               (fnd[0]['railsChecked'] && di == 'rails') ||
               (fnd[0]['audioChecked'] && di == 'audio') ||
-              (fnd[0]['kopiChecked'] && di == 'kopi'));
+              (fnd[0]['kopiChecked'] && di == 'kopi') ||
+              (fnd[0]['cssmeetupChecked'] && di == 'cssmeetup'));
             Session.set("allowed",success);
             Meteor.call("log",text,di,success);
             Session.set("name",fnd[0]['name']);
@@ -562,6 +567,7 @@ if (Meteor.isClient) {
       document.body.getElementsByClassName('toggle-rails')[0].checked=false;
       document.body.getElementsByClassName('toggle-audio')[0].checked=false;
       document.body.getElementsByClassName('toggle-kopi')[0].checked=false;
+      document.body.getElementsByClassName('toggle-cssmeetup')[0].checked=false;
       document.body.getElementsByClassName('aname')[0].value="";
       for (i = 1; i <= nrows; i++)
       {
@@ -602,6 +608,8 @@ if (Meteor.isClient) {
             document.body.getElementsByClassName('toggle-ios')[0].checked = true;
           if (evt == 'NodeBots - Sumo Bot Battles')
             document.body.getElementsByClassName('toggle-bots')[0].checked = true;
+          if (evt == 'CSS Singapore Meetup')
+            document.body.getElementsByClassName('toggle-cssmeetup')[0].checked = true;
           if (evt == 'DevFest.Asia Festival Ticket' || evt == 'Early-Buddy Festival Ticket')
           {
             document.body.getElementsByClassName('toggle-css')[0].checked=true;
@@ -620,6 +628,7 @@ if (Meteor.isClient) {
             document.body.getElementsByClassName('toggle-rails')[0].checked=true;
             document.body.getElementsByClassName('toggle-audio')[0].checked=true;
             document.body.getElementsByClassName('toggle-kopi')[0].checked=true;
+            document.body.getElementsByClassName('toggle-cssmeetup')[0].checked=true;
           }
           if (evt == 'Global Day of Coderetreat')
             document.body.getElementsByClassName('toggle-retreat')[0].checked = true;
@@ -667,6 +676,7 @@ if (Meteor.isClient) {
           document.body.getElementsByClassName('toggle-rails')[0].checked=fnd[0]['railsChecked'];
           document.body.getElementsByClassName('toggle-audio')[0].checked=fnd[0]['audioChecked'];
           document.body.getElementsByClassName('toggle-kopi')[0].checked=fnd[0]['kopiChecked'];
+          document.body.getElementsByClassName('toggle-cssmeetup')[0].checked=fnd[0]['cssmeetupChecked'];
           event.target.type.value = 'modify';
         }
       }
@@ -679,15 +689,14 @@ if (Meteor.isClient) {
 
 if (Meteor.isServer) {
   Meteor.publish("attendees", function(){
-    var currentUser = this.userId;
-    //console.log("CU :" + currentUser);
-      if (currentUser)
-      {
-        var uid = Accounts.findUserByUsername("admin")._id;
+    //var currentUser = this.userId;
+      //if (currentUser)
+      //{
+        //var uid = Accounts.findUserByUsername("admin")._id;
         //console.log(uid);
-        if (currentUser == uid)
+        //if (currentUser == uid)
           return Attendees.find();
-      }
+      //}
   });
   Meteor.publish("log", function(){
     var currentUser = this.userId;
