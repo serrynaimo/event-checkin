@@ -26,7 +26,9 @@ header h1 {
     text-transform: uppercase;
     text-shadow: 1px 1px 0 #000;
     letter-spacing: 2px;
+    border: 0;
     font-size: 1.5em;
+    color: #fff;
 }
 
 header ul {
@@ -50,6 +52,12 @@ header ul li a {
 
 h1 {
     margin-top: 55px;
+    padding: 0 5px 3px;
+    color: #ccc;
+    font-size: 1em;
+    text-transform: uppercase;
+    border-bottom: 1px dashed #ddd;
+    letter-spacing: 7px;
 }
 
 input[type=text] {
@@ -67,6 +75,7 @@ input[type=text] {
     border-left: 1px solid #ccc;
     overflow: auto;
     color: gray;
+    background: #fff;
 }
 
 .checkincover {
