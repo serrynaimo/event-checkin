@@ -195,25 +195,25 @@
 <template name="purchase">
 	<h1>Purchase</h1>
 	<form class="new-entry">
-		<table style="width:50%">
+		<table style="width:40%">
 			<tr>
-				<td><input type="radio" name="type" value="purchase" checked>Charge</td>
-				<td><input type="radio" name="type" value="checkbalance">Check Balance</td>
-				<td><input type="radio" name="type" value="undo">Undo Last</td>
+				<td><input type="radio" name="type" value="purchase" onclick="document.getElementById('wristid').focus()" checked>Charge</td>
+				<td><input type="radio" name="type" value="checkbalance" onclick="document.getElementById('wristid').focus()">Check Balance</td>
+				<td><input type="radio" name="type" value="undo" onclick="document.getElementById('wristid').focus()">Undo Last</td>
 			</tr>
 			<tr>
 				<td>&nbsp;</td>
 			</tr>
 			<tr>
-				<td><input type="radio" name="amount" value="5" checked>$5</td>
-				<td><input type="radio" name="amount" value="10">$10</td>
-				<td><input type="radio" name="amount" value="15">$15</td>
+				<td><input type="radio" name="amount" value="5" onclick="document.getElementById('wristid').focus()" checked>$5</td>
+				<td><input type="radio" name="amount" value="10" onclick="document.getElementById('wristid').focus()">$10</td>
+				<td><input type="radio" name="amount" value="15" onclick="document.getElementById('wristid').focus()">$15</td>
 			</tr>
 			<tr>
 				<td>&nbsp;</td>
 			</tr>
 			<tr>
-				<td><input type="text" name="id" class="aid" placeholder="Enter ID" autocomplete="off" autofocus="autofocus"/></td>
+				<td colspan="3"><input type="text" id="wristid" name="id" class="aid" placeholder="Enter ID" autocomplete="off" autofocus="autofocus"/></td>
 			</tr>
 			<tr>
 				<td>Balance: {{balance}}</td>
