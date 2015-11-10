@@ -60,6 +60,13 @@ h1 {
     letter-spacing: 7px;
 }
 
+th {
+    font-size: 0.8em;
+    color: #aaa;
+    border-bottom: 1px dashed #ccc;
+    text-align: left;
+}
+
 input[type=text] {
     padding: 5px 10px;
     font-size: 1em;
