@@ -23,7 +23,7 @@ Meteor.methods({
       });
     }
   },
-  addEntry: function (text, money, name, type, early, checked) {
+  addEntry: function (text, money, name, type, early, twitter, checked) {
     var currentUser = Meteor.userId();  
     if (currentUser)
     {
@@ -43,6 +43,7 @@ Meteor.methods({
               last : '0',
               type : type,
               early:early,
+              twitter:twitter,
               grumpyChecked : checked['grumpy'],
               retreatChecked : checked['retreat'],
               shdhChecked : checked['shdh'],
@@ -389,6 +390,7 @@ if (Meteor.isClient) {
   Session.setDefault("allowed",false);
   Session.setDefault("early",false);
   Session.setDefault("name","");
+  Session.setDefault("twitter","");
   Meteor.subscribe("attendees");
   Meteor.subscribe("log");
   Template.log.helpers({
@@ -423,6 +425,9 @@ if (Meteor.isClient) {
     },
     early:function(){
       return Session.get("early");
+    },
+    twitter:function(){
+      return Session.get("twitter");
     }
   });
   Template.log.onRendered(function(){
@@ -449,6 +454,7 @@ if (Meteor.isClient) {
       Session.set("theevent",di);
       Session.set("allowed",false);
       Session.set("early",false);
+      Session.set("twitter","");
       var text = event.target.id.value;
       if(text == 'configure') {
         document.body.classList.toggle('configure');
@@ -485,6 +491,7 @@ if (Meteor.isClient) {
             Meteor.call("log",text,di,success);
             Session.set("name",fnd[0]['name']);
             Session.set("early",fnd[0]['early']);
+            Session.set("twitter",fnd[0]['twitter']);
           }
         }
         setTimeout(function() {
@@ -559,8 +566,9 @@ if (Meteor.isClient) {
       if (!mval) //todo what to do?
         mval = '0';
       var nm = event.target.name.value;
-      Meteor.call("addEntry", text, mval, nm, type, Session.get("early"), makeChecked());
+      Meteor.call("addEntry", text, mval, nm, type, Session.get("early"), Session.get("twitter"), makeChecked());
       Session.set("early",false);
+      Session.set("twitter","");
       event.target.id.value="";
       event.target.name.value="";
       document.getElementById("lastname").focus();
@@ -641,6 +649,7 @@ if (Meteor.isClient) {
         {
           var fullname = row.cells[1].innerHTML + ' ' + row.cells[2].innerHTML;
           var evt = row.cells[4].innerHTML;
+          Session.set("twitter",row.cells[5].innerHTML);
           document.body.getElementsByClassName('aname')[0].value = fullname;
           if (evt == 'JSConf.Asia Ticket'||evt == 'Early-Buddy JSConf.Asia Ticket' || evt == 'JSConf.Asia')
             document.body.getElementsByClassName('toggle-js')[0].checked = true;
