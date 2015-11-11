@@ -23,7 +23,7 @@ Meteor.methods({
     }
   },
   addEntry: function (text, money, name, type, checked) {
-    var currentUser = Meteor.userId();  
+    var currentUser = Meteor.userId();
     if (currentUser)
     {
       var uname = Meteor.user().username;
@@ -77,7 +77,7 @@ Meteor.methods({
     }
   },
   modID: function (id, name, money, type, checked) {
-    var currentUser = Meteor.userId();   
+    var currentUser = Meteor.userId();
     if (currentUser)
     {
       var uname = Meteor.user().username;
@@ -130,7 +130,7 @@ Meteor.methods({
     }
   },
    modName: function (id, name, money, type, checked) {
-    var currentUser = Meteor.userId();  
+    var currentUser = Meteor.userId();
     if (currentUser)
     {
       var uname = Meteor.user().username;
@@ -183,7 +183,7 @@ Meteor.methods({
     }
   },
   modOther: function (id, name, money, type, checked) {
-    var currentUser = Meteor.userId();  
+    var currentUser = Meteor.userId();
     if (currentUser)
     {
       var uname = Meteor.user().username;
@@ -464,10 +464,10 @@ if (Meteor.isClient) {
             Session.set("name",fnd[0]['name']);
           }
         }
+        if(success) {
+          window.print();
+        }
         setTimeout(function() {
-          if(success) {
-            window.print();
-          }
           document.body.classList.remove('checked');
           event.target.id.focus();
         }, 4000);
