@@ -44,6 +44,7 @@ Meteor.methods({
               type : type,
               early:early,
               twitter:twitter,
+              time:new Date(),
               grumpyChecked : checked['grumpy'],
               retreatChecked : checked['retreat'],
               shdhChecked : checked['shdh'],
@@ -98,7 +99,8 @@ Meteor.methods({
             Attendees.update(oid, {$set: {
               id:id,
               money:money,
-              type:type,              
+              type:type,
+              time:new Date(),
               grumpyChecked : checked['grumpy'],
               retreatChecked : checked['retreat'],
               shdhChecked : checked['shdh'],
@@ -154,6 +156,7 @@ Meteor.methods({
               name:name,
               money:money,
               type:type,
+              time:new Date(),
               grumpyChecked : checked['grumpy'],
               retreatChecked : checked['retreat'],
               shdhChecked : checked['shdh'],
@@ -205,6 +208,7 @@ Meteor.methods({
           Attendees.update(oid, {$set: {
             money:money,
             type:type,
+            time:new Date(),
             grumpyChecked : checked['grumpy'],
             retreatChecked : checked['retreat'],
             shdhChecked : checked['shdh'],
@@ -399,10 +403,10 @@ if (Meteor.isClient) {
     }
   });
   Template.edit.helpers({
-    attendees: function() { return Attendees.find({}); }
+    attendees: function() { return Attendees.find({}, {sort: {time: -1}}); }
   });
   Template.add.helpers({
-    attendees: function() { return Attendees.find({}); }
+    attendees: function() { return Attendees.find({}, {sort: {time: -1}}); }
   });
   Template.purchase.helpers({
     balance: function() {
