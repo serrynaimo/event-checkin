@@ -16,13 +16,14 @@ Meteor.methods({
         user:getUserName(),
         time : new Date(),
         stype:fnd[0]['type'],
+        early:fnd[0]['early'],
         type : "Event",
         event : eventname,
         success : success
       });
     }
   },
-  addEntry: function (text, money, name, type, checked) {
+  addEntry: function (text, money, name, type, early, checked) {
     var currentUser = Meteor.userId();  
     if (currentUser)
     {
@@ -41,6 +42,7 @@ Meteor.methods({
               money : money,
               last : '0',
               type : type,
+              early:early,
               grumpyChecked : checked['grumpy'],
               retreatChecked : checked['retreat'],
               shdhChecked : checked['shdh'],
@@ -66,6 +68,7 @@ Meteor.methods({
               type : "New",
               money : money,
               user:getUserName(),
+              early:early,
               amount : '0',
               stype : type,
               event : "",
@@ -83,17 +86,18 @@ Meteor.methods({
       var uname = Meteor.user().username;
       if (uname == "admin")
       {
-        fnd = Attendees.find({name:name}).fetch();
+        fnd = Attendees.find({name:name}).fetch();        
         if (fnd.length == 1)
         {
           var oid = fnd[0]._id;
+          var early = fnd[0]['early'];
           fnd = Attendees.find({id:id}).fetch();
           if (fnd.length == 0)
           {
             Attendees.update(oid, {$set: {
               id:id,
               money:money,
-              type:type,
+              type:type,              
               grumpyChecked : checked['grumpy'],
               retreatChecked : checked['retreat'],
               shdhChecked : checked['shdh'],
@@ -119,6 +123,7 @@ Meteor.methods({
               type : "ModID",
               money : money,
               amount : '0',
+              early:early,
               user:getUserName(),
               stype:type,
               event : "",
@@ -140,6 +145,7 @@ Meteor.methods({
         if (fnd.length == 1)
         {
           var oid = fnd[0]._id;
+          var early = fnd[0]['early'];
           fnd = Attendees.find({name:name}).fetch();
           if (fnd.length == 0)
           {
@@ -172,6 +178,7 @@ Meteor.methods({
               type : "ModName",
               money : money,
               amount : '0',
+              early:early,
               user:getUserName(),
               stype:type,
               event : "",
@@ -193,6 +200,7 @@ Meteor.methods({
         if (fnd.length == 1)
         {
           var oid = fnd[0]._id;
+          var early = fnd[0]['early'];
           Attendees.update(oid, {$set: {
             money:money,
             type:type,
@@ -222,6 +230,7 @@ Meteor.methods({
               type : "ModOther",
               money : money,
               amount : '0',
+              early:early,
               user:getUserName(),
               event : "",
               success : true
@@ -240,6 +249,7 @@ Meteor.methods({
         var fnd = Attendees.find({id:id}).fetch();
         if (fnd.length == 1)
         {
+          var early = fnd[0]['early'];
           var nb = parseInt(fnd[0]['money'])-parseInt(money);
           if (nb < 0)
           {
@@ -251,6 +261,7 @@ Meteor.methods({
               money : fnd[0]['money'],
               stype:fnd[0]['type'],
               user:getUserName(),
+              early:early,
               amount : money,
               event : "",
               success : false
@@ -268,6 +279,7 @@ Meteor.methods({
               type : "Purchase",
               money : nb.toString(),
               stype:fnd[0]['type'],
+              early:early,
               user:getUserName(),
               amount : money,
               event : "",
@@ -288,6 +300,7 @@ Meteor.methods({
         var fnd = Attendees.find({id:id}).fetch();
         if (fnd.length == 1)
         {
+          var early = fnd[0]['early'];
           var lval = parseInt(fnd[0]['last']);
           var nb = parseInt(fnd[0]['money'])+lval;
           var oid = fnd[0]._id;
@@ -300,6 +313,7 @@ Meteor.methods({
             money : nb.toString(),
             amount : '-'+lval.toString(),
             user:getUserName(),
+            early:early,
             stype:fnd[0]['type'],
             event : "",
             success : true
@@ -373,6 +387,7 @@ Router.route('/log',{
 if (Meteor.isClient) {
   Session.setDefault("balance",'0');
   Session.setDefault("allowed",false);
+  Session.setDefault("early",false);
   Session.setDefault("name","");
   Meteor.subscribe("attendees");
   Meteor.subscribe("log");
@@ -389,6 +404,8 @@ if (Meteor.isClient) {
   });
   Template.purchase.helpers({
     balance: function() {
+      if (Session.get("balance") < 0)
+        return "Not enough credit!";
       return Session.get("balance");
     }
   });
@@ -404,6 +421,9 @@ if (Meteor.isClient) {
     event:function(){
       return Session.get("theevent");
     }
+    early:function(){
+      return Session.get("early");
+    }
   });
   Template.log.onRendered(function(){
     var all = Log.find({}, {sort: {time: -1}}).fetch();
@@ -415,6 +435,7 @@ if (Meteor.isClient) {
         "\"" + all[i]['type'] + "\"," +
         "\"" + all[i]['id'] + "\"," +
         "\"" + all[i]['name'] + "\"," +
+        "\"" + all[i]['early'] + "\"," +
         all[i]['money'] + "," +
         all[i]['amount'] + "," +
         "\"" + all[i]['stype']+"\"," +
@@ -427,6 +448,7 @@ if (Meteor.isClient) {
       var di = event.target.event.value || Session.get("theevent");
       Session.set("theevent",di);
       Session.set("allowed",false);
+      Session.set("early",false);
       var text = event.target.id.value;
       if(text == 'configure') {
         document.body.classList.toggle('configure');
@@ -462,6 +484,7 @@ if (Meteor.isClient) {
             Session.set("allowed",success);
             Meteor.call("log",text,di,success);
             Session.set("name",fnd[0]['name']);
+            Session.set("early",fnd[0]['early']);
           }
         }
         setTimeout(function() {
@@ -534,7 +557,8 @@ if (Meteor.isClient) {
       if (!mval) //todo what to do?
         mval = '0';
       var nm = event.target.name.value;
-      Meteor.call("addEntry", text, mval, nm, type, makeChecked());
+      Meteor.call("addEntry", text, mval, nm, type, Session.get("early"), makeChecked());
+      Session.set("early",false);
       event.target.id.value="";
       event.target.name.value="";
       document.getElementById("lastname").focus();
@@ -605,6 +629,7 @@ if (Meteor.isClient) {
       document.body.getElementsByClassName('toggle-audio')[0].checked=false;
       document.body.getElementsByClassName('toggle-kopi')[0].checked=false;
       document.body.getElementsByClassName('toggle-cssmeetup')[0].checked=false;
+      Session.set("early",false);
       document.body.getElementsByClassName('aname')[0].value="";
       for (i = 1; i <= nrows; i++)
       {
@@ -669,6 +694,8 @@ if (Meteor.isClient) {
           }
           if (evt == 'Global Day of Coderetreat')
             document.body.getElementsByClassName('toggle-retreat')[0].checked = true;
+          if (evt == 'Early-Buddy JSConf.Asia Ticket' || evt == 'Early-Buddy Festival Ticket' || evt == 'Early-Buddy CSSConf.Asia Ticket')
+            Session.set("early",true);
         }
       }
     }
