@@ -14,14 +14,15 @@ Meteor.methods({
         money : fnd[0]['money'],
         amount : '0',
         time : new Date(),
+        stype:fnd[0]['type'],
         type : "Event",
         event : eventname,
         success : success
       });
     }
   },
-  addEntry: function (text, money, name, checked) {
-    var currentUser = Meteor.userId();
+  addEntry: function (text, money, name, type, checked) {
+    var currentUser = Meteor.userId();  
     if (currentUser)
     {
       var uname = Meteor.user().username;
@@ -38,6 +39,7 @@ Meteor.methods({
               name : name,
               money : money,
               last : '0',
+              type : type,
               grumpyChecked : checked['grumpy'],
               retreatChecked : checked['retreat'],
               shdhChecked : checked['shdh'],
@@ -63,6 +65,7 @@ Meteor.methods({
               type : "New",
               money : money,
               amount : '0',
+              stype : type,
               event : "",
               success : true
             });
@@ -71,8 +74,8 @@ Meteor.methods({
       }
     }
   },
-  modID: function (id, name, money, checked) {
-    var currentUser = Meteor.userId();
+  modID: function (id, name, money, type, checked) {
+    var currentUser = Meteor.userId();   
     if (currentUser)
     {
       var uname = Meteor.user().username;
@@ -88,6 +91,7 @@ Meteor.methods({
             Attendees.update(oid, {$set: {
               id:id,
               money:money,
+              type:type,
               grumpyChecked : checked['grumpy'],
               retreatChecked : checked['retreat'],
               shdhChecked : checked['shdh'],
@@ -113,6 +117,7 @@ Meteor.methods({
               type : "ModID",
               money : money,
               amount : '0',
+              stype:type,
               event : "",
               success : true
             });
@@ -121,8 +126,8 @@ Meteor.methods({
       }
     }
   },
-   modName: function (id, name, money, checked) {
-    var currentUser = Meteor.userId();
+   modName: function (id, name, money, type, checked) {
+    var currentUser = Meteor.userId();  
     if (currentUser)
     {
       var uname = Meteor.user().username;
@@ -138,6 +143,7 @@ Meteor.methods({
             Attendees.update(oid, {$set: {
               name:name,
               money:money,
+              type:type,
               grumpyChecked : checked['grumpy'],
               retreatChecked : checked['retreat'],
               shdhChecked : checked['shdh'],
@@ -163,6 +169,7 @@ Meteor.methods({
               type : "ModName",
               money : money,
               amount : '0',
+              stype:type,
               event : "",
               success : true
             });
@@ -171,8 +178,8 @@ Meteor.methods({
       }
     }
   },
-  modOther: function (id, name, money, checked) {
-    var currentUser = Meteor.userId();
+  modOther: function (id, name, money, type, checked) {
+    var currentUser = Meteor.userId();  
     if (currentUser)
     {
       var uname = Meteor.user().username;
@@ -184,6 +191,7 @@ Meteor.methods({
           var oid = fnd[0]._id;
           Attendees.update(oid, {$set: {
             money:money,
+            type:type,
             grumpyChecked : checked['grumpy'],
             retreatChecked : checked['retreat'],
             shdhChecked : checked['shdh'],
@@ -206,6 +214,7 @@ Meteor.methods({
               id : id,
               name : name,
               time : new Date(),
+              stype:type,
               type : "ModOther",
               money : money,
               amount : '0',
@@ -235,6 +244,7 @@ Meteor.methods({
               time : new Date(),
               type : "Purchase",
               money : fnd[0]['money'],
+              stype:fnd[0]['type'],
               amount : money,
               event : "",
               success : false
@@ -251,6 +261,7 @@ Meteor.methods({
               time : new Date(),
               type : "Purchase",
               money : nb.toString(),
+              stype:fnd[0]['type'],
               amount : money,
               event : "",
               success : true
@@ -281,6 +292,7 @@ Meteor.methods({
             type : "Undo",
             money : nb.toString(),
             amount : '-'+lval.toString(),
+            stype:fnd[0]['type'],
             event : "",
             success : true
           });
@@ -396,6 +408,7 @@ if (Meteor.isClient) {
         "\"" + all[i]['name'] + "\"," +
         all[i]['money'] + "," +
         all[i]['amount'] + "," +
+        "\"" + all[i]['stype']+"\"," +
         "\"" + all[i]['event'] + "\"," +
         "\"" + all[i]['success'] + "\"\n";
   });
@@ -508,10 +521,11 @@ if (Meteor.isClient) {
       var text = event.target.id.value;
       var mval = event.target.amount.value;
       var nm = event.target.name.value;
+      var type = event.target.type.value;
       if (!mval) //todo what to do?
         mval = '0';
       var nm = event.target.name.value;
-      Meteor.call("addEntry", text, mval, nm, makeChecked());
+      Meteor.call("addEntry", text, mval, nm, type, makeChecked());
       event.target.id.value="";
       event.target.name.value="";
       document.getElementById("lastname").focus();
@@ -656,7 +670,7 @@ if (Meteor.isClient) {
       var mode = event.target.mode.value;
       if (mode == 'modify')
       {
-        doModify();
+        doModify(event.target.stype.value);
         doClear();
       }
       else if (mode == 'load')
@@ -693,6 +707,7 @@ if (Meteor.isClient) {
           document.body.getElementsByClassName('toggle-cssmeetup')[0].checked=fnd[0]['cssmeetupChecked'];
           event.target.mode.value = 'modify';
           event.target.id.value = '';
+          event.target.stype.value=fnd[0]['type'];
         }
       }
       document.getElementById("wristid").focus();
