@@ -13,6 +13,7 @@ Meteor.methods({
         name : fnd[0]['name'],
         money : fnd[0]['money'],
         amount : '0',
+        user:getUserName(),
         time : new Date(),
         stype:fnd[0]['type'],
         type : "Event",
@@ -64,6 +65,7 @@ Meteor.methods({
               time : new Date(),
               type : "New",
               money : money,
+              user:getUserName(),
               amount : '0',
               stype : type,
               event : "",
@@ -117,6 +119,7 @@ Meteor.methods({
               type : "ModID",
               money : money,
               amount : '0',
+              user:getUserName(),
               stype:type,
               event : "",
               success : true
@@ -169,6 +172,7 @@ Meteor.methods({
               type : "ModName",
               money : money,
               amount : '0',
+              user:getUserName(),
               stype:type,
               event : "",
               success : true
@@ -218,6 +222,7 @@ Meteor.methods({
               type : "ModOther",
               money : money,
               amount : '0',
+              user:getUserName(),
               event : "",
               success : true
             });
@@ -230,7 +235,7 @@ Meteor.methods({
     if (currentUser)
     {
       var uname = Meteor.user().username;
-      if (uname == "admin" || uname == "coffee")
+      if (uname == "admin" || uname == "coffee" || uname == "bar")
       {
         var fnd = Attendees.find({id:id}).fetch();
         if (fnd.length == 1)
@@ -245,6 +250,7 @@ Meteor.methods({
               type : "Purchase",
               money : fnd[0]['money'],
               stype:fnd[0]['type'],
+              user:getUserName(),
               amount : money,
               event : "",
               success : false
@@ -262,6 +268,7 @@ Meteor.methods({
               type : "Purchase",
               money : nb.toString(),
               stype:fnd[0]['type'],
+              user:getUserName(),
               amount : money,
               event : "",
               success : true
@@ -276,7 +283,7 @@ Meteor.methods({
     if (currentUser)
     {
       var uname = Meteor.user().username;
-      if (uname == "admin" || uname == "coffee")
+      if (uname == "admin" || uname == "coffee" || uname == "bar")
       {
         var fnd = Attendees.find({id:id}).fetch();
         if (fnd.length == 1)
@@ -292,6 +299,7 @@ Meteor.methods({
             type : "Undo",
             money : nb.toString(),
             amount : '-'+lval.toString(),
+            user:getUserName(),
             stype:fnd[0]['type'],
             event : "",
             success : true
@@ -340,7 +348,7 @@ Router.route('/purchase',{
     if (currentUser)
     {
       var uname = Meteor.user().username;
-      if (uname == "coffee" || uname == "admin")
+      if (uname == "coffee" || uname == "admin" || uname == "bar")
         this.next();
       else
         this.redirect("home");
@@ -403,6 +411,7 @@ if (Meteor.isClient) {
     for (i = 0; i < all.length; i++)
       elem.value = elem.value +
         "\"" + all[i]['time'] + "\"," +
+        "\"" + all[i]['user'] + "\"," +
         "\"" + all[i]['type'] + "\"," +
         "\"" + all[i]['id'] + "\"," +
         "\"" + all[i]['name'] + "\"," +

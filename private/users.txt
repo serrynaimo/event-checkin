@@ -1,1 +1,1 @@
-admin dfpass;coffee cfpass
+admin dfpass;coffee cfpass;bar barpass
