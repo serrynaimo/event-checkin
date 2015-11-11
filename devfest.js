@@ -464,9 +464,11 @@ if (Meteor.isClient) {
             Session.set("name",fnd[0]['name']);
           }
         }
-        if(success) {
-          window.print();
-        }
+        setTimeout(function() {
+          if(success) {
+            window.print();
+          }
+        },1000);
         setTimeout(function() {
           document.body.classList.remove('checked');
           event.target.id.focus();
