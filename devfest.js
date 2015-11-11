@@ -420,7 +420,7 @@ if (Meteor.isClient) {
     },
     event:function(){
       return Session.get("theevent");
-    }
+    },
     early:function(){
       return Session.get("early");
     }
