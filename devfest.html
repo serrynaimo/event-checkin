@@ -88,12 +88,10 @@
 				<td>&nbsp;</td>
 			</tr>
 			<tr>
-				<td><input type="radio" name="amount" value="0" checked>$0</td>
-				<td><input type="radio" name="amount" value="5">$5</td>
-				<td><input type="radio" name="amount" value="10">$10</td>
-				<td><input type="radio" name="amount" value="15">$15</td>
-				<td><input type="radio" name="amount" value="20">$20</td>
-				<td><input type="radio" name="amount" value="25">$25</td>
+				<td><input type="radio" name="amount" class="money-none" value="0" checked>$0</td>
+				<td><input type="radio" name="amount" class="money-css" value="20">$20</td>
+				<td><input type="radio" name="amount" class="money-js" value="40">$40</td>
+				<td><input type="radio" name="amount" class="money-cssjs" value="60">$60</td>
 			</tr>
 			<tr>
 				<td>&nbsp;</td>
@@ -204,9 +202,11 @@
 				<td>&nbsp;</td>
 			</tr>
 			<tr>
-				<td><input type="radio" name="amount" value="5" onclick="document.getElementById('wristid').focus()" checked>$5</td>
-				<td><input type="radio" name="amount" value="10" onclick="document.getElementById('wristid').focus()">$10</td>
-				<td><input type="radio" name="amount" value="15" onclick="document.getElementById('wristid').focus()">$15</td>
+				<td colspan="3"><input type="radio" name="amount" value="5" onclick="document.getElementById('wristid').focus()" checked>$5 &nbsp;
+				<input type="radio" name="amount" value="10" onclick="document.getElementById('wristid').focus()">$8 &nbsp;
+				<input type="radio" name="amount" value="15" onclick="document.getElementById('wristid').focus()">$10 &nbsp;
+				<input type="radio" name="amount" value="15" onclick="document.getElementById('wristid').focus()">$12 &nbsp;
+				<input type="radio" name="amount" value="15" onclick="document.getElementById('wristid').focus()">$20</td>
 			</tr>
 			<tr>
 				<td>&nbsp;</td>
@@ -265,7 +265,7 @@
 	    <span class="name">
 	        {{name}}
 	    </span>
-	    <span class="event"></span>
+	    <span class="event {{early}}"></span>
 	</div>
 </template>
 

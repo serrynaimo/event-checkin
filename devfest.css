@@ -226,6 +226,10 @@ body:not(.checked) .checkincover .scan {
 }
 
 
+.event.early-true:before {
+    content: "Early Bird: ";
+}
+
 
 .grumpy .event:after {
     content: "Grumpy Gits";

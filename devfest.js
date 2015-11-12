@@ -24,7 +24,7 @@ Meteor.methods({
     }
   },
   addEntry: function (text, money, name, type, early, twitter, checked) {
-    var currentUser = Meteor.userId();  
+    var currentUser = Meteor.userId();
     if (currentUser)
     {
       var uname = Meteor.user().username;
@@ -87,7 +87,7 @@ Meteor.methods({
       var uname = Meteor.user().username;
       if (uname == "admin")
       {
-        fnd = Attendees.find({name:name}).fetch();        
+        fnd = Attendees.find({name:name}).fetch();
         if (fnd.length == 1)
         {
           var oid = fnd[0]._id;
@@ -98,7 +98,7 @@ Meteor.methods({
             Attendees.update(oid, {$set: {
               id:id,
               money:money,
-              type:type,              
+              type:type,
               grumpyChecked : checked['grumpy'],
               retreatChecked : checked['retreat'],
               shdhChecked : checked['shdh'],
@@ -639,6 +639,7 @@ if (Meteor.isClient) {
       document.body.getElementsByClassName('toggle-audio')[0].checked=false;
       document.body.getElementsByClassName('toggle-kopi')[0].checked=false;
       document.body.getElementsByClassName('toggle-cssmeetup')[0].checked=false;
+      document.body.getElementsByClassName('money-none')[0].checked=true;
       Session.set("early",false);
       document.body.getElementsByClassName('aname')[0].value="";
       for (i = 1; i <= nrows; i++)
@@ -652,21 +653,32 @@ if (Meteor.isClient) {
           Session.set("twitter",row.cells[5].innerHTML);
           document.body.getElementsByClassName('aname')[0].value = fullname;
           if (evt == 'JSConf.Asia Ticket'||evt == 'Early-Buddy JSConf.Asia Ticket' || evt == 'JSConf.Asia')
+          {
             document.body.getElementsByClassName('toggle-js')[0].checked = true;
+            document.body.getElementsByClassName('money-js')[0].checked = true;
+          }
           if (evt == 'Front-End TL;DR')
             document.body.getElementsByClassName('toggle-tldr')[0].checked = true;
           if (evt == 'Dev Careers in Singapore')
             document.body.getElementsByClassName('toggle-careers')[0].checked = true;
           if (evt == 'SuperHappyDevHouse_4.0 Ticket'||evt == 'SuperHappyDevHouse_4.0')
+          {
             document.body.getElementsByClassName('toggle-shdh')[0].checked = true;
-          if (evt == 'Grumpy Gits')
+            document.body.getElementsByClassName('toggle-careers')[0].checked=true;
+          }
+          if (evt == 'Grumpy Gits') {
+            document.body.getElementsByClassName('toggle-careers')[0].checked=true;
             document.body.getElementsByClassName('toggle-grumpy')[0].checked = true;
+          }
           if (evt == 'KopiJS')
             document.body.getElementsByClassName('toggle-kopi')[0].checked = true;
           if (evt == 'Haskell Meetup Web-Dev Edition')
             document.body.getElementsByClassName('toggle-haskell')[0].checked = true;
           if (evt == 'CSSConf.Asia Ticket' || evt == 'Early-Buddy CSSConf.Asia Ticket' || evt=='CSSConf.Asia')
+          {
             document.body.getElementsByClassName('toggle-css')[0].checked = true;
+            document.body.getElementsByClassName('money-css')[0].checked = true;
+          }
           if (evt == 'Rails Girls (DevFest.Asia Edition)')
             document.body.getElementsByClassName('toggle-rails')[0].checked = true;
           if (evt == 'Hacking UX: Design thinking for techies')
@@ -702,9 +714,18 @@ if (Meteor.isClient) {
             document.body.getElementsByClassName('toggle-audio')[0].checked=true;
             document.body.getElementsByClassName('toggle-kopi')[0].checked=true;
             document.body.getElementsByClassName('toggle-cssmeetup')[0].checked=true;
+            document.body.getElementsByClassName('money-cssjs')[0].checked=true;
+          }
+          if ((evt == 'JSConf.Asia Ticket'||evt == 'Early-Buddy JSConf.Asia Ticket' || evt == 'JSConf.Asia') &&
+              (evt == 'CSSConf.Asia Ticket' || evt == 'Early-Buddy CSSConf.Asia Ticket' || evt=='CSSConf.Asia'))
+          {
+            document.body.getElementsByClassName('money-cssjs')[0].checked = true;
           }
           if (evt == 'Global Day of Coderetreat')
+          {
             document.body.getElementsByClassName('toggle-retreat')[0].checked = true;
+            document.body.getElementsByClassName('toggle-careers')[0].checked=true;
+          }
           if (evt == 'Early-Buddy JSConf.Asia Ticket' || evt == 'Early-Buddy Festival Ticket' || evt == 'Early-Buddy CSSConf.Asia Ticket')
             Session.set("early",true);
         }
