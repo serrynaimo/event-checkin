@@ -219,7 +219,7 @@ body:not(.checked) .checkincover .scan {
         transform-origin: 125px 125px;
     }
 
-    .printlabel > * {
+    .printlabel > .name, .printlabel > .event {
         display: block !important;
         color: #000 !important;
     }
