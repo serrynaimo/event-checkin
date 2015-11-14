@@ -431,6 +431,7 @@ if (Meteor.isClient) {
   Template.totals.helpers({
     eventcount:function(){
       var lst = {};
+      var names = {};
       var fnditems = Log.find({
         $and: [
           {type:"Event"},
@@ -440,9 +441,19 @@ if (Meteor.isClient) {
       {
         var evt = fnditems[i]['event'];
         if (evt in lst)
-          lst[evt] = lst[evt] + 1;
+        {
+          var nm = fnditems[i]['name'];
+          if (!(nm in names[evt]))              
+          {
+            lst[evt] = lst[evt] + 1;
+            names[evt][nm] = true;
+          }
+        }
         else
+        {
           lst[evt] = 1;
+          names[evt] = {};
+        }
       }
       var ret = [];
       for (var evt in lst)
