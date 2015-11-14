@@ -409,7 +409,6 @@ if (Meteor.isClient) {
   Session.setDefault("name","");
   Session.setDefault("twitter","");
   Meteor.subscribe("attendees");
-  Session.setDefault("eventtotal",0);
   Meteor.subscribe("log");
   Template.log.helpers({
     log: function(){
@@ -430,11 +429,25 @@ if (Meteor.isClient) {
     }
   });
   Template.totals.helpers({
-    event:function(){
-      return Session.get("theevent");
-    },
-    eventtotal:function(){
-      return Session.get("eventtotal");
+    eventcount:function(){
+      var lst = {};
+      var fnditems = Log.find({
+        $and: [
+          {type:"Event"},
+          {success:true}
+        ]}).fetch();
+      for (i = 0; i < fnditems.length; i++)
+      {
+        var evt = fnditems[i]['event'];
+        if (evt in lst)
+          lst[evt] = lst[evt] + 1;
+        else
+          lst[evt] = 1;
+      }
+      var ret = [];
+      for (var evt in lst)
+        ret.push({event:evt,count:lst[evt]});
+      return ret;
     }
   });
   Template.event.helpers({
@@ -514,8 +527,6 @@ if (Meteor.isClient) {
               (fnd[0]['kopiChecked'] && di == 'kopi') ||
               (fnd[0]['cssmeetupChecked'] && di == 'cssmeetup'));
             Session.set("allowed",success);
-            if (success)
-              Session.set("eventtotal",Session.get("eventtotal")+1);
             Meteor.call("log",text,di,success);
             Session.set("name",fnd[0]['name']);
             Session.set("early",fnd[0]['early']);

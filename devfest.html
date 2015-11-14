@@ -277,7 +277,15 @@
 
 <template name="totals">
 	<h1>Totals</h1>
-	{{event}} : {{eventtotal}}
+	<ul>
+		{{#each eventcount}}
+			{{> ec}}
+		{{/each}}
+	</ul>
+</template>
+
+<template name="ec">
+	<li>{{event}}: {{count}}</li>
 </template>
 
 <template name="logitem">
