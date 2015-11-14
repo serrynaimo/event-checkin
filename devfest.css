@@ -179,6 +179,11 @@ body:not(.checked) .checkincover .scan {
     height: 250px;
     position: relative;
     overflow: hidden;
+    text-align: center;
+}
+
+.printlabel img {
+    display: none;
 }
 
 .printlabel .name {
@@ -334,6 +339,15 @@ body:not(.checked) .checkincover .scan {
 }
 .ux .bg {
     background-image: url('http://2015.devfest.asia/images/events/hackingux.jpg');
+}
+
+.printlabel.bots img {
+    display: block;
+    margin-left: 100px;
+    opacity: 0.3;
+}
+.printlabel.bots .name {
+    font-size: 2.8em;
 }
 
 .bots .event:after {
