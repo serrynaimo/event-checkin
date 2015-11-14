@@ -375,6 +375,7 @@ Router.route('/purchase',{
   }
 });
 Router.route('/event');
+Router.route('/totals');
 Router.route('/log',{
   onBeforeAction: function() {
     var currentUser = Meteor.userId();
@@ -396,6 +397,7 @@ if (Meteor.isClient) {
   Session.setDefault("name","");
   Session.setDefault("twitter","");
   Meteor.subscribe("attendees");
+  Session.setDefault("eventtotal",0);
   Meteor.subscribe("log");
   Template.log.helpers({
     log: function(){
@@ -413,6 +415,14 @@ if (Meteor.isClient) {
       if (Session.get("balance") < 0)
         return "Not enough credit!";
       return Session.get("balance");
+    }
+  });
+  Template.totals.helpers({
+    event:function(){
+      return Session.get("theevent");
+    },
+    eventtotal:function(){
+      return Session.get("eventtotal");
     }
   });
   Template.event.helpers({
@@ -492,6 +502,8 @@ if (Meteor.isClient) {
               (fnd[0]['kopiChecked'] && di == 'kopi') ||
               (fnd[0]['cssmeetupChecked'] && di == 'cssmeetup'));
             Session.set("allowed",success);
+            if (success)
+              Session.set("eventtotal",Session.get("eventtotal")+1);
             Meteor.call("log",text,di,success);
             Session.set("name",fnd[0]['name']);
             Session.set("early",fnd[0]['early']);
