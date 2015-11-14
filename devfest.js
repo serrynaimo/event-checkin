@@ -375,7 +375,19 @@ Router.route('/purchase',{
   }
 });
 Router.route('/event');
-Router.route('/totals');
+Router.route('/totals',{
+  onBeforeAction:function(){
+    var currentUser = Meteor.userId();
+    if (currentUser)
+    {
+      var uname = Meteor.user().username;
+      if (uname == "admin")
+        this.next();
+      else
+        this.redirect("home");
+    }
+  }
+});
 Router.route('/log',{
   onBeforeAction: function() {
     var currentUser = Meteor.userId();
