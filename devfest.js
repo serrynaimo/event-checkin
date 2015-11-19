@@ -443,7 +443,7 @@ if (Meteor.isClient) {
         if (evt in lst)
         {
           var nm = fnditems[i]['name'];
-          if (!(nm in names[evt]))              
+          if (!(nm in names[evt]))
           {
             lst[evt] = lst[evt] + 1;
             names[evt][nm] = true;
@@ -546,7 +546,7 @@ if (Meteor.isClient) {
         }
         setTimeout(function() {
           if(success) {
-            window.print();
+            //window.print();
           }
         },1000);
         setTimeout(function() {
